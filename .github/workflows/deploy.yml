@@ -11,7 +11,7 @@ env:
   CODEARTIFACT_DOMAIN_OWNER: ${{ secrets.AWS_ACCOUNT_ID }}
   ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   ECR_REPO: zurohq-${{ secrets.DOCKER_IMAGE_NAME }}
-  SERVICE_HOST: ${{ secrets.SERVICE_HOST }}
+  DEV_BACKBONE_HOST: ${{ secrets.DEV_BACKBONE_HOST }}
 
 jobs:
   deploy:
@@ -76,6 +76,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ec2-user
           key: ${{ secrets.KEY }}
-          envs: SERVICE_HOST
+          envs: DEV_BACKBONE_HOST
           script: |
-            ssh -i zurodev.pem ec2-user@$SERVICE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} dev
+            ssh -i zurodev.pem ec2-user@$DEV_BACKBONE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} dev

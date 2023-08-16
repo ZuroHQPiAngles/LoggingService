@@ -12,7 +12,7 @@ on:
 env:
   ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   ECR_REPO: zurohq-${{ secrets.DOCKER_IMAGE_NAME }}
-  UAT_SERVICE_HOST: ${{ secrets.UAT_SERVICE_HOST }}
+  UAT_BACKBONE_HOST: ${{ secrets.UAT_BACKBONE_HOST }}
   
 jobs:
   deploy:
@@ -51,6 +51,6 @@ jobs:
           host: ${{ secrets.UAT_HOST }}
           username: ec2-user
           key: ${{ secrets.UAT_KEY }}
-          envs: UAT_SERVICE_HOST
+          envs: UAT_BACKBONE_HOST
           script: |
-            ssh -i zurouat.pem ec2-user@$UAT_SERVICE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} uat
+            ssh -i zurouat.pem ec2-user@$UAT_BACKBONE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} uat

@@ -12,7 +12,7 @@ on:
 env:
   ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   ECR_REPO: zurohq-${{ secrets.DOCKER_IMAGE_NAME }}
-  PROD_SERVICE_HOST: ${{ secrets.PROD_SERVICE_HOST }}
+  PROD_BACKBONE_HOST: ${{ secrets.PROD_BACKBONE_HOST }}
   
 jobs:
   deploy:
@@ -51,6 +51,6 @@ jobs:
           host: ${{ secrets.PROD_HOST }}
           username: ec2-user
           key: ${{ secrets.PROD_KEY }}
-          envs: PROD_SERVICE_HOST
+          envs: PROD_BACKBONE_HOST
           script: |
-            ssh -i zuroprod.pem ec2-user@$PROD_SERVICE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} prod
+            ssh -i zuroprod.pem ec2-user@$PROD_BACKBONE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} prod

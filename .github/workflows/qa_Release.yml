@@ -14,7 +14,7 @@ env:
   CODEARTIFACT_DOMAIN_OWNER: ${{ secrets.AWS_ACCOUNT_ID }}
   ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   ECR_REPO: zurohq-${{ secrets.DOCKER_IMAGE_NAME }}
-  QA_SERVICE_HOST: ${{ secrets.QA_SERVICE_HOST }}
+  QA_BACKBONE_HOST: ${{ secrets.QA_BACKBONE_HOST }}
   PAT: ${{ secrets.PERSONAL_TOKEN }}
 
 jobs:
@@ -79,6 +79,6 @@ jobs:
           host: ${{ secrets.QA_HOST }}
           username: ec2-user
           key: ${{ secrets.QA_KEY }}
-          envs: QA_SERVICE_HOST
+          envs: QA_BACKBONE_HOST
           script: |
-            ssh -i zuroqat.pem ec2-user@$QA_SERVICE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} qa
+            ssh -i zuroqat.pem ec2-user@$QA_BACKBONE_HOST 'bash -s' < deploy.sh ${{ secrets.DOCKER_IMAGE_NAME }} qa
