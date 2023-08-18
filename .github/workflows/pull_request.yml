@@ -98,7 +98,7 @@ jobs:
           MAVEN_TOKEN: ${{ steps.token.outputs.token }}
         run: |
           mvn versions:use-latest-versions
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ZuroHQ_LoggingService
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ZuroHQPiAngles_LoggingService
         
 # "notify" workflow for slack notification
   notify:
