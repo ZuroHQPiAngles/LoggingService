@@ -42,6 +42,7 @@ public class LoggingRDBMSDAOImpl extends AbstractDAO implements LoggingDAO
 	@Override
 	public void insertLog(LogEvent event) throws DAOException
 	{
+		String message = stripMessage(event);
 		super.executeSP(INSERT_LOG_SP, 13, new StatementPreparer()
 		{
 			@Override
@@ -58,9 +59,28 @@ public class LoggingRDBMSDAOImpl extends AbstractDAO implements LoggingDAO
 				call.setString(9, event.getCategory().toString());
 				call.setString(10, event.getClassName());
 				call.setString(11, event.getLineNumber());
-				call.setString(12, event.getMessage());
+				call.setString(12, message);
 				call.setString(13, event.getExceptionStackTrace());
 			}
 		});
 	}
+
+	/**
+	 * Message column is 2048 varchar in the current RDBMS logs.log_event table
+	 * below logic is to protect from column out of bounds so we capture part of the log
+	 */
+	private String stripMessage(LogEvent event) 
+	{
+		String message;
+		if (event.getMessage().length() > 2048)
+		{
+			message = event.getMessage().substring(0, 2048);
+		}
+		else 
+		{
+			message = event.getMessage();
+		}
+		return message;
+	}
 }
+
